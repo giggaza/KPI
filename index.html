@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPI Performance Progress 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* CSS RESET & BASE STYLES */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            background-color: #f0f4f8; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 40px; 
+            align-items: center; 
+            padding: 40px 0;
+            font-family: 'Prompt', sans-serif;
+        }
+        
+        /* SLIDE CONTAINER (16:9 Standard Ratio) */
+        .slide-container {
+            width: 1280px; 
+            height: 720px;
+            background-color: #fdfdfd;
+            color: #1e293b;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            /* ปรับ Margin ด้านบนของสไลด์ให้แคบลงเพื่อให้เนื้อหาขยับขึ้นบน และขยายเต็มหน้าพอดี */
+            padding: 35px 60px 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(15, 23, 42, 0.06);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        /* LIGHT DECORATIVE BACKGROUNDS (ป้องกันไม่ให้ดูโล่ง) */
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(#cbd5e1 1.2px, transparent 1.2px);
+            background-size: 24px 24px;
+            opacity: 0.4;
+            z-index: 0;
+        }
+
+        .ambient-glow-1 {
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .ambient-glow-2 {
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.06) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .slide-container > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* TYPOGRAPHY */
+        h1, h2, h3, .number-font { font-family: 'Montserrat', 'Prompt', sans-serif; }
+        .slide-title { 
+            font-size: 38px; 
+            font-weight: 700; 
+            color: #0f172a; 
+            /* ลดระยะห่างด้านล่างของหัวข้อสไลด์ดึงเนื้อหาขึ้นด้านบน */
+            margin-bottom: 20px; 
+            display: flex; 
+            align-items: center; 
+            gap: 15px;
+            letter-spacing: -0.5px;
+        }
+        .slide-title::before {
+            content: '';
+            width: 6px;
+            height: 36px;
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .content-area { 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            width: 100%; 
+        }
+
+        /* GLASS CARD / TILE STYLES */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 16px;
+            padding: 26px;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.02);
+        }
+
+        /* PROGRESS BARS */
+        .progress-container {
+            width: 100%;
+            background: #e2e8f0;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-bar {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        /* BADGES */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .badge-success { background: #dcfce7; color: #15803d; }
+        .badge-warning { background: #fef3c7; color: #b45309; }
+        .badge-info { background: #e0f2fe; color: #0369a1; }
+
+        /* MULTI-COLUMN LAYOUTS */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; }
+
+        /* TIMELINE STYLES (KPI 2) */
+        .web-timeline-box {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            /* เพิ่มความสูงและการเว้นระยะให้เต็มพื้นที่พอดี */
+            padding: 30px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 480px; 
+        }
+        .timeline-steps {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            margin-top: 25px;
+            position: relative;
+            padding-left: 15px;
+        }
+        .timeline-steps::before {
+            content: '';
+            position: absolute;
+            left: 25px;
+            top: 15px;
+            bottom: 15px;
+            width: 2px;
+            background: #e2e8f0;
+            z-index: 0;
+        }
+        .step-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+            padding: 4px 0;
+        }
+        .step-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            color: #94a3b8;
+        }
+        .step-row.completed .step-icon {
+            background: #10b981;
+            border-color: #10b981;
+            color: #fff;
+        }
+        .step-row.current .step-icon {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+        }
+        .step-text {
+            font-size: 16px;
+            font-weight: 500;
+            color: #64748b;
+        }
+        .step-row.completed .step-text { color: #0f172a; font-weight: 600; }
+        .step-row.current .step-text { color: #3b82f6; font-weight: 700; }
+
+        /* KPI 3 GRID PROGRESS (ติ๊กถูกเขียว) */
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .progress-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #fff;
+            /* เพิ่มความหนาของช่อง Dashboard เพื่อขยายให้พอดีสไลด์ */
+            padding: 30px 24px; 
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.01);
+        }
+        .progress-item.done {
+            border-left: 6px solid #10b981;
+            background: rgba(16, 185, 129, 0.02);
+        }
+        .progress-item.pending {
+            border-left: 6px solid #cbd5e1;
+            opacity: 0.7;
+        }
+        .check-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+        .check-circle.done { background: #dcfce7; color: #10b981; }
+        .check-circle.pending { background: #f1f5f9; color: #94a3b8; }
+    </style>
+</head>
+<body>
+
+<!-- SLIDE 1: COVER -->
+<div class="slide-container" id="slide-cover">
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+    <div class="content-area" style="text-align: center; justify-content: center; height: 100%;">
+        <span class="badge badge-info" style="margin: 0 auto 24px; font-size: 14px; letter-spacing: 1.5px; padding: 8px 18px;">QUARTERLY PERFORMANCE REPORT</span>
+        <h1 style="font-size: 76px; font-weight: 800; color: #0f172a; line-height: 1.1; margin-bottom: 15px; letter-spacing: -1.5px;">
+            KPI PERFORMANCE <span style="color: #3b82f6;">2026</span>
+        </h1>
+        <p style="font-size: 24px; color: #64748b; font-weight: 400; max-width: 800px; margin: 10px auto 45px;">
+            รายงานความคืบหน้าและการผลักดันเป้าหมายเชิงข้อมูลเพื่อความสำเร็จขององค์กร
+        </p>
+        <div style="width: 120px; height: 5px; background: linear-gradient(90deg, #3b82f6, #10b981); margin: 0 auto 50px; border-radius: 10px;"></div>
+        
+        <!-- ข้อมูลผู้รายงานปรับแต่งมาไว้หน้าปกอย่างสง่างาม -->
+        <div style="background: rgba(255,255,255,0.6); display: inline-flex; flex-direction: column; gap: 4px; padding: 14px 28px; border-radius: 12px; border: 1px solid rgba(226, 232, 240, 0.8); backdrop-filter: blur(5px); margin-top: 10px;">
+            <p style="font-size: 14px; font-weight: 700; color: #3b82f6; text-transform: uppercase; letter-spacing: 1px;">Reported By</p>
+            <p style="font-size: 18px; font-weight: 600; color: #1e293b;">PISSARA KHUNTRAKOON</p>
+            <p style="font-size: 13px; color: #64748b; font-weight: 500;">Department: Business Development</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 2: OVERVIEW (ภาพรวมความสำเร็จ 4 KPI) -->
+<div class="slide-container" id="slide-overview">
+    <div class="ambient-glow-1"></div>
+    <h2 class="slide-title">OVERVIEW: SUMMARY OF 4 KPIs</h2>
+    <div class="content-area">
+        <!-- เพิ่มขนาดความสูงของกลุ่มการ์ดเพื่อขยายให้เต็มสไลด์ลดพื้นที่โล่ง -->
+        <div class="grid-4" style="margin-top: 5px;">
+            <!-- Card 1 -->
+            <div class="glass-card" style="border-top: 6px solid #3b82f6; display: flex; flex-direction: column; justify-content: space-between; height: 460px; padding: 30px 24px;">
+                <div>
+                    <span class="badge badge-info">KPI 1</span>
+                    <h3 style="font-size: 22px; margin-top: 18px; color: #0f172a; font-weight: 700;">CRM & Clean Data</h3>
+                    <p style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.4;">ล้างข้อมูลลูกค้าและติดตั้งโครงสร้างระบบ CRM</p>
+                </div>
+                <div style="text-align: center; margin: 25px 0;">
+                    <span class="number-font" style="font-size: 84px; font-weight: 800; color: #3b82f6; line-height: 1;">75%</span>
+                </div>
+                <div>
+                    <div class="progress-container" style="height: 12px;"><div class="progress-bar" style="width: 75%; background: #3b82f6;"></div></div>
+                    <span style="font-size: 13px; color: #64748b; font-weight: 600; display: block; margin-top: 5px;">ภาพรวมการดำเนินการระบบ</span>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="glass-card" style="border-top: 6px solid #7c3aed; display: flex; flex-direction: column; justify-content: space-between; height: 460px; padding: 30px 24px;">
+                <div>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed;">KPI 2</span>
+                    <h3 style="font-size: 22px; margin-top: 18px; color: #0f172a; font-weight: 700;">Website Dev</h3>
+                    <p style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.4;">พัฒนาเว็บไซต์ GMTX & MM THE FORUM</p>
+                </div>
+                <div style="text-align: center; margin: 25px 0;">
+                    <span class="number-font" style="font-size: 84px; font-weight: 800; color: #7c3aed; line-height: 1;">50%</span>
+                </div>
+                <div>
+                    <div class="progress-container" style="height: 12px;"><div class="progress-bar" style="width: 50%; background: #7c3aed;"></div></div>
+                    <span style="font-size: 13px; color: #64748b; font-weight: 600; display: block; margin-top: 5px;">สถานะ: กำลังหา Outsource</span>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="glass-card" style="border-top: 6px solid #10b981; display: flex; flex-direction: column; justify-content: space-between; height: 460px; padding: 30px 24px;">
+                <div>
+                    <span class="badge badge-success">KPI 3</span>
+                    <h3 style="font-size: 22px; margin-top: 18px; color: #0f172a; font-weight: 700;">Dashboards</h3>
+                    <p style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.4;">พัฒนาบอร์ดรายงานผลและประเมินประสิทธิภาพ</p>
+                </div>
+                <div style="text-align: center; margin: 25px 0;">
+                    <span class="number-font" style="font-size: 84px; font-weight: 800; color: #10b981; line-height: 1;">50%</span>
+                </div>
+                <div>
+                    <div class="progress-container" style="height: 12px;"><div class="progress-bar" style="width: 50%; background: #10b981;"></div></div>
+                    <span style="font-size: 13px; color: #64748b; font-weight: 600; display: block; margin-top: 5px;">สำเร็จแล้ว 3 จาก 6 รายการ</span>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="glass-card" style="border-top: 6px solid #f59e0b; display: flex; flex-direction: column; justify-content: space-between; height: 460px; padding: 30px 24px;">
+                <div>
+                    <span class="badge badge-warning">KPI 4</span>
+                    <h3 style="font-size: 22px; margin-top: 18px; color: #0f172a; font-weight: 700;">Supersource</h3>
+                    <p style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.4;">ผลักดันยอดขายและพัฒนาเว็บไซต์</p>
+                </div>
+                <div style="text-align: center; margin: 25px 0;">
+                    <span class="number-font" style="font-size: 84px; font-weight: 800; color: #f59e0b; line-height: 1;">48%</span>
+                </div>
+                <div>
+                    <div class="progress-container" style="height: 12px;"><div class="progress-bar" style="width: 48%; background: #f59e0b;"></div></div>
+                    <span style="font-size: 13px; color: #64748b; font-weight: 600; display: block; margin-top: 5px;">เฉลี่ยความสำเร็จ 3 เป้าหมาย</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 3: KPI 1 - CRM & DATA (รวมในหน้าเดียวและปรับความสูงองค์ประกอบ) -->
+<div class="slide-container" id="slide-kpi1">
+    <div class="ambient-glow-2"></div>
+    <h2 class="slide-title">KPI 1: CRM SYSTEM & DATA HYGIENE</h2>
+    <div class="content-area">
+        <div class="grid-2" style="height: 480px; align-items: stretch;">
+            <!-- Clean Data & Seg -->
+            <div style="display: flex; flex-direction: column; gap: 24px; justify-content: space-between;">
+                <!-- Clean Data 50% -->
+                <div class="glass-card" style="border-left: 6px solid #3b82f6; padding: 35px 30px; display: flex; flex-direction: column; justify-content: center; flex-grow: 1;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="font-size: 20px; color: #475569; font-weight: 700;"><i class="fa-solid fa-broom" style="margin-right: 10px; color: #3b82f6;"></i> Clean Data Progress</h3>
+                        <span class="badge badge-info" style="font-size: 14px;">50% Completed</span>
+                    </div>
+                    <div style="display: flex; align-items: baseline; gap: 12px; margin: 20px 0 15px;">
+                        <span class="number-font" style="font-size: 52px; font-weight: 700; color: #0f172a; line-height: 1;">1,500</span>
+                        <span style="font-size: 20px; color: #64748b;">/ 3,000 ข้อมูลทั้งหมด</span>
+                    </div>
+                    <div class="progress-container" style="height: 14px; margin-bottom: 5px;"><div class="progress-bar" style="width: 50%; background: #3b82f6;"></div></div>
+                </div>
+
+                <!-- Segmentation & Sales Analysis (การ์ดขยายความกว้างและสูง) -->
+                <div class="grid-2" style="gap: 24px;">
+                    <div class="glass-card" style="text-align: center; border-bottom: 5px solid #10b981; padding: 25px 15px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <div style="color: #10b981; font-size: 32px; margin-bottom: 12px;"><i class="fa-solid fa-users-viewfinder"></i></div>
+                        <h4 style="font-size: 16px; color: #475569; margin-bottom: 10px; font-weight: 600;">Customer Segmentation</h4>
+                        <span class="badge badge-success"><i class="fa-solid fa-check"></i> สำเร็จแล้ว</span>
+                    </div>
+                    <div class="glass-card" style="text-align: center; border-bottom: 5px solid #10b981; padding: 25px 15px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <div style="color: #10b981; font-size: 32px; margin-bottom: 12px;"><i class="fa-solid fa-chart-line"></i></div>
+                        <h4 style="font-size: 16px; color: #475569; margin-bottom: 10px; font-weight: 600;">Sales Analysis</h4>
+                        <span class="badge badge-success"><i class="fa-solid fa-check"></i> สำเร็จแล้ว</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workflow Automation (ความสูงสมดุลเต็มพื้นที่สไลด์) -->
+            <div class="glass-card" style="border-left: 6px solid #7c3aed; padding: 30px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="font-size: 20px; color: #475569; font-weight: 700;"><i class="fa-solid fa-robot" style="margin-right: 10px; color: #7c3aed;"></i> Workflow Automation</h3>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed; font-size: 14px;">สำเร็จ 3 / 5 Workflows</span>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 14px; flex-grow: 1; justify-content: center;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(16, 185, 129, 0.08); padding: 12px 18px; border-radius: 10px; border-left: 4px solid #10b981;">
+                        <span style="font-weight: 600; font-size: 15px; color: #15803d; line-height: 1.3;">Workflow 1 (แจ้งเตือนหมดสัญญา)</span>
+                        <span class="badge badge-success"><i class="fa-solid fa-check"></i> Done</span>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(16, 185, 129, 0.08); padding: 12px 18px; border-radius: 10px; border-left: 4px solid #10b981;">
+                        <span style="font-weight: 600; font-size: 15px; color: #15803d; line-height: 1.3;">Workflow 2 (ดีลกำลังจะล้มเหลว)</span>
+                        <span class="badge badge-success"><i class="fa-solid fa-check"></i> Done</span>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(16, 185, 129, 0.08); padding: 12px 18px; border-radius: 10px; border-left: 4px solid #10b981;">
+                        <span style="font-weight: 600; font-size: 15px; color: #15803d; line-height: 1.3;">Workflow 3 (บัญชีไม่ซื้อเกิน 1 ปี)</span>
+                        <span class="badge badge-success"><i class="fa-solid fa-check"></i> Done</span>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 12px 18px; border-radius: 10px; border-left: 4px solid #cbd5e1; opacity: 0.65;">
+                        <span style="font-weight: 500; font-size: 15px; color: #64748b;">Workflow 4</span>
+                        <span class="badge badge-warning" style="background: #e2e8f0; color: #64748b; font-size: 12px;"><i class="fa-solid fa-spinner"></i> Pending</span>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 12px 18px; border-radius: 10px; border-left: 4px solid #cbd5e1; opacity: 0.65;">
+                        <span style="font-weight: 500; font-size: 15px; color: #64748b;">Workflow 5</span>
+                        <span class="badge badge-warning" style="background: #e2e8f0; color: #64748b; font-size: 12px;"><i class="fa-solid fa-spinner"></i> Pending</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 4: KPI 2 - WEBSITE DEVELOPMENT (ขยายความสูงกล่องไทม์ไลน์) -->
+<div class="slide-container" id="slide-kpi2">
+    <div class="ambient-glow-1"></div>
+    <h2 class="slide-title">KPI 2: WEBSITE TIMELINE STATUS</h2>
+    <div class="content-area">
+        <div class="grid-2" style="margin-top: 5px;">
+            <!-- GMTX Website -->
+            <div class="web-timeline-box" style="border-top: 6px solid #3b82f6;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px;">
+                    <h3 style="font-size: 24px; color: #0f172a; font-weight: 700;"><i class="fa-solid fa-globe" style="color: #3b82f6; margin-right: 10px;"></i> GMTX</h3>
+                    <span class="badge badge-info" style="font-size: 14px; padding: 6px 14px;">Outsource Sourcing</span>
+                </div>
+                
+                <div class="timeline-steps">
+                    <div class="step-row completed">
+                        <div class="step-icon"><i class="fa-solid fa-check"></i></div>
+                        <div class="step-text">Sitemap & Wireframe</div>
+                    </div>
+                    <div class="step-row completed">
+                        <div class="step-icon"><i class="fa-solid fa-check"></i></div>
+                        <div class="step-text">Content & Material</div>
+                    </div>
+                    <div class="step-row current">
+                        <div class="step-icon">3</div>
+                        <div class="step-text">Find Outsource (ปัจจุบัน)</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-icon">4</div>
+                        <div class="step-text">Design & Develop</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-icon">5</div>
+                        <div class="step-text">Test & Launch</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MM THE FORUM Website -->
+            <div class="web-timeline-box" style="border-top: 6px solid #7c3aed;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px;">
+                    <h3 style="font-size: 24px; color: #0f172a; font-weight: 700;"><i class="fa-solid fa-comments" style="color: #7c3aed; margin-right: 10px;"></i> MM THE FORUM</h3>
+                    <span class="badge" style="background: #f3e8ff; color: #7c3aed; font-size: 14px; padding: 6px 14px;">Outsource Sourcing</span>
+                </div>
+                
+                <div class="timeline-steps">
+                    <div class="step-row completed">
+                        <div class="step-icon"><i class="fa-solid fa-check"></i></div>
+                        <div class="step-text">Sitemap & Wireframe</div>
+                    </div>
+                    <div class="step-row completed">
+                        <div class="step-icon"><i class="fa-solid fa-check"></i></div>
+                        <div class="step-text">Content & Material</div>
+                    </div>
+                    <div class="step-row current">
+                        <div class="step-icon" style="background: #7c3aed; border-color: #7c3aed;">3</div>
+                        <div class="step-text" style="color: #7c3aed;">Find Outsource (ปัจจุบัน)</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-icon">4</div>
+                        <div class="step-text">Design & Develop</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-icon">5</div>
+                        <div class="step-text">Test & Launch</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 5: KPI 3 - DASHBOARD WORK PROGRESS (แสดงครบ 6 ตัวพร้อมดีไซน์ขนาดใหญ่ขึ้น) -->
+<div class="slide-container" id="slide-kpi3">
+    <div class="ambient-glow-2"></div>
+    <h2 class="slide-title">KPI 3: DASHBOARD DEVELOPMENT PROGRESS</h2>
+    <div class="content-area">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <p style="font-size: 18px; color: #475569;">ความคืบหน้าการพัฒนา Dashboard จากเป้าหมายทั้งหมด 6 ระบบงาน</p>
+            <span class="badge badge-success" style="font-size: 16px; padding: 8px 18px;">
+                <i class="fa-solid fa-chart-simple"></i> สำเร็จเสร็จสิ้นแล้ว 3 / 6 รายการ (50%)
+            </span>
+        </div>
+
+        <div class="progress-grid">
+            <!-- Dashboard 1: Done -->
+            <div class="progress-item done">
+                <div class="check-circle done"><i class="fa-solid fa-check"></i></div>
+                <div>
+                    <h3 style="font-size: 18px; color: #0f172a; font-weight: 700; margin-bottom: 4px;">1. CRM Customer Overview</h3>
+                    <p style="font-size: 13px; color: #15803d; font-weight: 500;">เสร็จสมบูรณ์ - ดึงข้อมูลอัตโนมัติ</p>
+                </div>
+            </div>
+
+            <!-- Dashboard 2: Done -->
+            <div class="progress-item done">
+                <div class="check-circle done"><i class="fa-solid fa-check"></i></div>
+                <div>
+                    <h3 style="font-size: 18px; color: #0f172a; font-weight: 700; margin-bottom: 4px;">2. Sales & Revenue Funnel</h3>
+                    <p style="font-size: 13px; color: #15803d; font-weight: 500;">เสร็จสมบูรณ์ - เชื่อมต่อ API เรียบร้อย</p>
+                </div>
+            </div>
+
+            <!-- Dashboard 3: Done -->
+            <div class="progress-item done">
+                <div class="check-circle done"><i class="fa-solid fa-check"></i></div>
+                <div>
+                    <h3 style="font-size: 18px; color: #0f172a; font-weight: 700; margin-bottom: 4px;">3. Marketing Ads ROI</h3>
+                    <p style="font-size: 13px; color: #15803d; font-weight: 500;">เสร็จสมบูรณ์ - พร้อมประเมินแคมเปญ</p>
+                </div>
+            </div>
+
+            <!-- Dashboard 4: Pending -->
+            <div class="progress-item pending">
+                <div class="check-circle pending"><i class="fa-solid fa-ellipsis"></i></div>
+                <div>
+                    <h3 style="font-size: 18px; color: #475569; font-weight: 600; margin-bottom: 4px;">4. Customer Retention</h3>
+                    <p style="font-size: 13px; color: #64748b;">รอดำเนินการ - ล้างข้อมูลเฟส 2</p>
+                </div>
+            </div>
+
+            <!-- Dashboard 5: Pending -->
+            <div class="progress-item pending">
+                <div class="check-circle pending"><i class="fa-solid fa-ellipsis"></i></div>
+                <div>
+                    <h3 style="font-size: 18px; color: #475569; font-weight: 600; margin-bottom: 4px;">5. Inventory & Supply Chain</h3>
+                    <p style="font-size: 13px; color: #64748b;">รอดำเนินการ - เตรียมสร้าง Schema</p>
+                </div>
+            </div>
+
+            <!-- Dashboard 6: Pending -->
+            <div class="progress-item pending">
+                <div class="check-circle pending"><i class="fa-solid fa-ellipsis"></i></div>
+                <div>
+                    <h3 style="font-size: 18px; color: #475569; font-weight: 600; margin-bottom: 4px;">6. Executive Summary Matrix</h3>
+                    <p style="font-size: 13px; color: #64748b;">รอดำเนินการ - รวบรวมสรุปภาพรวม</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 6: KPI 4 - SUPERSOURCE PERFORMANCE (ขยายความสูงการ์ดเพื่อทดแทนช่องว่าง) -->
+<div class="slide-container" id="slide-kpi4">
+    <div class="ambient-glow-1"></div>
+    <h2 class="slide-title">KPI 4: SUPERSOURCE SALES & MARKETING</h2>
+    <div class="content-area">
+        <div style="margin-bottom: 20px;">
+            <p style="font-size: 18px; color: #475569;">ผลักดันยอดขายให้บรรลุเป้าหมาย 100% ด้วยแผนการสร้างความน่าเชื่อถือและการเข้าถึงกลุ่มลูกค้า</p>
+        </div>
+
+        <!-- ขยายความสูงของการ์ดจาก 320px เป็น 370px ทำให้ดูเต็มหน้าและพอดีสไลด์ยิ่งขึ้น -->
+        <div class="grid-3">
+            <!-- 1. Web Credibility -->
+            <div class="glass-card" style="border-top: 6px solid #ef4444; height: 370px; display: flex; flex-direction: column; justify-content: space-between; padding: 30px 24px;">
+                <div>
+                    <span class="badge" style="background: #fee2e2; color: #ef4444; font-size: 13px;"><i class="fa-solid fa-shield-halved"></i> Web Credibility</span>
+                    <h3 style="font-size: 20px; color: #0f172a; margin-top: 18px; font-weight: 700;">ปรับปรุงเว็บเพิ่มความน่าเชื่อถือ</h3>
+                </div>
+                <div style="text-align: center; margin: 20px 0;">
+                    <span class="number-font" style="font-size: 56px; font-weight: 800; color: #ef4444; line-height: 1;">3 / 5</span>
+                    <p style="font-size: 15px; color: #64748b; font-weight: 500; margin-top: 5px;">ขั้นตอนการดำเนินงานสำเร็จ</p>
+                </div>
+                <div>
+                    <div class="progress-container" style="height: 10px;"><div class="progress-bar" style="width: 60%; background: #ef4444;"></div></div>
+                </div>
+            </div>
+
+            <!-- 2. Web Traffic -->
+            <div class="glass-card" style="border-top: 6px solid #3b82f6; height: 370px; display: flex; flex-direction: column; justify-content: space-between; padding: 30px 24px;">
+                <div>
+                    <span class="badge badge-info" style="font-size: 13px;"><i class="fa-solid fa-arrow-trend-up"></i> Web Traffic</span>
+                    <h3 style="font-size: 20px; color: #0f172a; margin-top: 18px; font-weight: 700;">เพิ่มจำนวนผู้เข้าชมเว็บไซต์</h3>
+                </div>
+                <div style="text-align: center; margin: 20px 0;">
+                    <span class="number-font" style="font-size: 56px; font-weight: 800; color: #3b82f6; line-height: 1;">10,000</span>
+                    <p style="font-size: 15px; color: #64748b; font-weight: 500; margin-top: 5px;">จากเป้าหมาย 20,000 ครั้ง</p>
+                </div>
+                <div>
+                    <div class="progress-container" style="height: 10px;"><div class="progress-bar" style="width: 50%; background: #3b82f6;"></div></div>
+                </div>
+            </div>
+
+            <!-- 3. SEO Articles -->
+            <div class="glass-card" style="border-top: 6px solid #f59e0b; height: 370px; display: flex; flex-direction: column; justify-content: space-between; padding: 30px 24px;">
+                <div>
+                    <span class="badge badge-warning" style="font-size: 13px;"><i class="fa-solid fa-pen-nib"></i> SEO Articles</span>
+                    <h3 style="font-size: 20px; color: #0f172a; margin-top: 18px; font-weight: 700;">เขียนและเผยแพร่บทความ</h3>
+                </div>
+                <div style="text-align: center; margin: 20px 0;">
+                    <span class="number-font" style="font-size: 56px; font-weight: 800; color: #f59e0b; line-height: 1;">4 / 12</span>
+                    <p style="font-size: 15px; color: #64748b; font-weight: 500; margin-top: 5px;">บทความคุณภาพเสร็จสมบูรณ์</p>
+                </div>
+                <div>
+                    <div class="progress-container" style="height: 10px;"><div class="progress-bar" style="width: 33.3%; background: #f59e0b;"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 7: THANK YOU -->
+<div class="slide-container" id="slide-end">
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+    <div class="content-area" style="text-align: center; justify-content: center; height: 100%;">
+        <h1 style="font-size: 80px; font-weight: 800; color: #0f172a; margin-bottom: 15px; letter-spacing: -2px;">THANK YOU</h1>
+        <p style="font-size: 26px; color: #3b82f6; font-weight: 600;">QUESTIONS & ANSWERS</p>
+        <div style="width: 80px; height: 4px; background: #cbd5e1; margin: 40px auto 30px; border-radius: 2px;"></div>
+        <p style="font-size: 16px; color: #94a3b8;"><i class="fa-solid fa-server"></i> Performance Report - Department of Business Development</p>
+    </div>
+</div>
+
+</body>
+</html>
