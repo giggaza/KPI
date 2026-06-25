@@ -1,3 +1,6 @@
+Kpi code
+
+```html
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -31,14 +34,13 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            /* ปรับ Margin ด้านบนของสไลด์ให้แคบลงเพื่อให้เนื้อหาขยับขึ้นบน และขยายเต็มหน้าพอดี */
             padding: 35px 60px 40px 60px;
             border-radius: 20px;
             box-shadow: 0 15px 40px rgba(15, 23, 42, 0.06);
             border: 1px solid rgba(226, 232, 240, 0.8);
         }
 
-        /* LIGHT DECORATIVE BACKGROUNDS (ป้องกันไม่ให้ดูโล่ง) */
+        /* LIGHT DECORATIVE BACKGROUNDS */
         .slide-container::before {
             content: '';
             position: absolute;
@@ -82,12 +84,12 @@
             font-size: 38px; 
             font-weight: 700; 
             color: #0f172a; 
-            /* ลดระยะห่างด้านล่างของหัวข้อสไลด์ดึงเนื้อหาขึ้นด้านบน */
             margin-bottom: 20px; 
             display: flex; 
             align-items: center; 
             gap: 15px;
             letter-spacing: -0.5px;
+            width: 100%;
         }
         .slide-title::before {
             content: '';
@@ -154,7 +156,6 @@
             background: rgba(255, 255, 255, 0.8);
             border: 1px solid #e2e8f0;
             border-radius: 16px;
-            /* เพิ่มความสูงและการเว้นระยะให้เต็มพื้นที่พอดี */
             padding: 30px; 
             display: flex;
             flex-direction: column;
@@ -212,6 +213,12 @@
             color: #fff;
             box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
         }
+        .step-row.next-step .step-icon {
+            background: #fff3cd;
+            border-color: #f59e0b;
+            color: #d97706;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+        }
         .step-text {
             font-size: 16px;
             font-weight: 500;
@@ -219,8 +226,9 @@
         }
         .step-row.completed .step-text { color: #0f172a; font-weight: 600; }
         .step-row.current .step-text { color: #3b82f6; font-weight: 700; }
+        .step-row.next-step .step-text { color: #d97706; font-weight: 700; }
 
-        /* KPI 3 GRID PROGRESS (ติ๊กถูกเขียว) */
+        /* KPI 3 GRID PROGRESS (ติ๊กถูกเขียว / กำลังดำเนินการส้ม) */
         .progress-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -233,7 +241,6 @@
             align-items: center;
             gap: 20px;
             background: #fff;
-            /* เพิ่มความหนาของช่อง Dashboard เพื่อขยายให้พอดีสไลด์ */
             padding: 30px 24px; 
             border-radius: 12px;
             border: 1px solid #e2e8f0;
@@ -243,6 +250,10 @@
         .progress-item.done {
             border-left: 6px solid #10b981;
             background: rgba(16, 185, 129, 0.02);
+        }
+        .progress-item.progressing {
+            border-left: 6px solid #f59e0b;
+            background: rgba(245, 158, 11, 0.02);
         }
         .progress-item.pending {
             border-left: 6px solid #cbd5e1;
@@ -273,9 +284,7 @@
         <h1 style="font-size: 76px; font-weight: 800; color: #0f172a; line-height: 1.1; margin-bottom: 15px; letter-spacing: -1.5px;">
             KPI PERFORMANCE <span style="color: #3b82f6;">2026</span>
         </h1>
-        <p style="font-size: 24px; color: #64748b; font-weight: 400; max-width: 800px; margin: 10px auto 45px;">
-            รายงานความคืบหน้าและการผลักดันเป้าหมายเชิงข้อมูลเพื่อความสำเร็จขององค์กร
-        </p>
+    
         <div style="width: 120px; height: 5px; background: linear-gradient(90deg, #3b82f6, #10b981); margin: 0 auto 50px; border-radius: 10px;"></div>
         
         <!-- ข้อมูลผู้รายงานปรับแต่งมาไว้หน้าปกอย่างสง่างาม -->
@@ -287,14 +296,13 @@
     </div>
 </div>
 
-<!-- SLIDE 2: OVERVIEW (ภาพรวมความสำเร็จ 4 KPI) -->
+<!-- SLIDE 2: OVERVIEW (ภาพรวมความสำเร็จ 4 KPI - อัปเดตตามตัวเลขขอมูลใหม่) -->
 <div class="slide-container" id="slide-overview">
     <div class="ambient-glow-1"></div>
     <h2 class="slide-title">OVERVIEW: SUMMARY OF 4 KPIs</h2>
     <div class="content-area">
-        <!-- เพิ่มขนาดความสูงของกลุ่มการ์ดเพื่อขยายให้เต็มสไลด์ลดพื้นที่โล่ง -->
         <div class="grid-4" style="margin-top: 5px;">
-            <!-- Card 1 -->
+            <!-- Card 1 (แก้ไขเป้าหมายเป็น 50%) -->
             <div class="glass-card" style="border-top: 6px solid #3b82f6; display: flex; flex-direction: column; justify-content: space-between; height: 460px; padding: 30px 24px;">
                 <div>
                     <span class="badge badge-info">KPI 1</span>
@@ -302,15 +310,15 @@
                     <p style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.4;">ล้างข้อมูลลูกค้าและติดตั้งโครงสร้างระบบ CRM</p>
                 </div>
                 <div style="text-align: center; margin: 25px 0;">
-                    <span class="number-font" style="font-size: 84px; font-weight: 800; color: #3b82f6; line-height: 1;">75%</span>
+                    <span class="number-font" style="font-size: 84px; font-weight: 800; color: #3b82f6; line-height: 1;">50%</span>
                 </div>
                 <div>
-                    <div class="progress-container" style="height: 12px;"><div class="progress-bar" style="width: 75%; background: #3b82f6;"></div></div>
+                    <div class="progress-container" style="height: 12px;"><div class="progress-bar" style="width: 50%; background: #3b82f6;"></div></div>
                     <span style="font-size: 13px; color: #64748b; font-weight: 600; display: block; margin-top: 5px;">ภาพรวมการดำเนินการระบบ</span>
                 </div>
             </div>
 
-            <!-- Card 2 -->
+            <!-- Card 2 (แก้ไขเป้าหมายเป็น 50%) -->
             <div class="glass-card" style="border-top: 6px solid #7c3aed; display: flex; flex-direction: column; justify-content: space-between; height: 460px; padding: 30px 24px;">
                 <div>
                     <span class="badge" style="background: #f3e8ff; color: #7c3aed;">KPI 2</span>
@@ -322,7 +330,7 @@
                 </div>
                 <div>
                     <div class="progress-container" style="height: 12px;"><div class="progress-bar" style="width: 50%; background: #7c3aed;"></div></div>
-                    <span style="font-size: 13px; color: #64748b; font-weight: 600; display: block; margin-top: 5px;">สถานะ: กำลังหา Outsource</span>
+                    <span style="font-size: 13px; color: #64748b; font-weight: 600; display: block; margin-top: 5px;">ขั้นตอนถัดไป: Design / Development</span>
                 </div>
             </div>
 
@@ -334,70 +342,78 @@
                     <p style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.4;">พัฒนาบอร์ดรายงานผลและประเมินประสิทธิภาพ</p>
                 </div>
                 <div style="text-align: center; margin: 25px 0;">
-                    <span class="number-font" style="font-size: 84px; font-weight: 800; color: #10b981; line-height: 1;">50%</span>
+                    <span class="number-font" style="font-size: 84px; font-weight: 800; color: #10b981; line-height: 1;">80%</span>
                 </div>
                 <div>
-                    <div class="progress-container" style="height: 12px;"><div class="progress-bar" style="width: 50%; background: #10b981;"></div></div>
-                    <span style="font-size: 13px; color: #64748b; font-weight: 600; display: block; margin-top: 5px;">สำเร็จแล้ว 3 จาก 6 รายการ</span>
+                    <div class="progress-container" style="height: 12px;"><div class="progress-bar" style="width: 80%; background: #10b981;"></div></div>
+                    <span style="font-size: 13px; color: #64748b; font-weight: 600; display: block; margin-top: 5px;">สำเร็จแล้ว 4 จาก 5 รายการ</span>
                 </div>
             </div>
 
-            <!-- Card 4 -->
+            <!-- Card 4 (แก้ไขเป้าหมายเป็น 52%) -->
             <div class="glass-card" style="border-top: 6px solid #f59e0b; display: flex; flex-direction: column; justify-content: space-between; height: 460px; padding: 30px 24px;">
                 <div>
                     <span class="badge badge-warning">KPI 4</span>
                     <h3 style="font-size: 22px; margin-top: 18px; color: #0f172a; font-weight: 700;">Supersource</h3>
-                    <p style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.4;">ผลักดันยอดขายและพัฒนาเว็บไซต์</p>
+                    <p style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.4;">ปรับปรุงเว็บไซต์และกระตุ้นยอดขาย</p>
                 </div>
                 <div style="text-align: center; margin: 25px 0;">
-                    <span class="number-font" style="font-size: 84px; font-weight: 800; color: #f59e0b; line-height: 1;">48%</span>
+                    <span class="number-font" style="font-size: 84px; font-weight: 800; color: #f59e0b; line-height: 1;">52%</span>
                 </div>
                 <div>
-                    <div class="progress-container" style="height: 12px;"><div class="progress-bar" style="width: 48%; background: #f59e0b;"></div></div>
-                    <span style="font-size: 13px; color: #64748b; font-weight: 600; display: block; margin-top: 5px;">เฉลี่ยความสำเร็จ 3 เป้าหมาย</span>
+                    <div class="progress-container" style="height: 12px;"><div class="progress-bar" style="width: 52%; background: #f59e0b;"></div></div>
+                    <span style="font-size: 13px; color: #64748b; font-weight: 600; display: block; margin-top: 5px;">เฉลี่ยความสำเร็จแผนงานสะสม</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- SLIDE 3: KPI 1 - CRM & DATA (รวมในหน้าเดียวและปรับความสูงองค์ประกอบ) -->
+<!-- SLIDE 3: KPI 1 - CRM & DATA -->
 <div class="slide-container" id="slide-kpi1">
     <div class="ambient-glow-2"></div>
-    <h2 class="slide-title">KPI 1: CRM SYSTEM & DATA HYGIENE</h2>
+    <h2 class="slide-title">
+        KPI 1: CRM SYSTEM & DATA CLEANSING
+    </h2>
     <div class="content-area">
         <div class="grid-2" style="height: 480px; align-items: stretch;">
             <!-- Clean Data & Seg -->
             <div style="display: flex; flex-direction: column; gap: 24px; justify-content: space-between;">
-                <!-- Clean Data 50% -->
+                <!-- Clean Data 6.7% (200 / 3000+) -->
                 <div class="glass-card" style="border-left: 6px solid #3b82f6; padding: 35px 30px; display: flex; flex-direction: column; justify-content: center; flex-grow: 1;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <h3 style="font-size: 20px; color: #475569; font-weight: 700;"><i class="fa-solid fa-broom" style="margin-right: 10px; color: #3b82f6;"></i> Clean Data Progress</h3>
-                        <span class="badge badge-info" style="font-size: 14px;">50% Completed</span>
+                        <span class="badge badge-info" style="font-size: 14px; background: #e0f2fe; color: #0369a1;">6.7% Completed</span>
                     </div>
-                    <div style="display: flex; align-items: baseline; gap: 12px; margin: 20px 0 15px;">
-                        <span class="number-font" style="font-size: 52px; font-weight: 700; color: #0f172a; line-height: 1;">1,500</span>
-                        <span style="font-size: 20px; color: #64748b;">/ 3,000 ข้อมูลทั้งหมด</span>
+                    <div style="display: flex; align-items: baseline; gap: 12px; margin: 20px 0 12px;">
+                        <span class="number-font" style="font-size: 52px; font-weight: 700; color: #0f172a; line-height: 1;">200</span>
+                        <span style="font-size: 20px; color: #64748b;">/ 3,000+ ข้อมูลทั้งหมด</span>
                     </div>
-                    <div class="progress-container" style="height: 14px; margin-bottom: 5px;"><div class="progress-bar" style="width: 50%; background: #3b82f6;"></div></div>
+                    <div class="progress-container" style="height: 14px; margin-bottom: 5px;"><div class="progress-bar" style="width: 6.7%; background: #3b82f6;"></div></div>
+                    
+                    <!-- หมายเหตุเพิ่มเติมแจ้งเรื่อง "กานต์" มาช่วยดำเนินการ -->
+                    <p style="font-size: 13.5px; color: #0369a1; font-weight: 500; margin-top: 10px; display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-circle-info" style="font-size: 15px;"></i>
+                        <span>หมายเหตุ: ตอนนี้ได้ <strong>"กานต์"</strong> มาช่วยร่วมดำเนินการด้วย</span>
+                    </p>
                 </div>
 
-                <!-- Segmentation & Sales Analysis (การ์ดขยายความกว้างและสูง) -->
+                <!-- Segmentation & Sales Analysis -->
                 <div class="grid-2" style="gap: 24px;">
                     <div class="glass-card" style="text-align: center; border-bottom: 5px solid #10b981; padding: 25px 15px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                         <div style="color: #10b981; font-size: 32px; margin-bottom: 12px;"><i class="fa-solid fa-users-viewfinder"></i></div>
                         <h4 style="font-size: 16px; color: #475569; margin-bottom: 10px; font-weight: 600;">Customer Segmentation</h4>
                         <span class="badge badge-success"><i class="fa-solid fa-check"></i> สำเร็จแล้ว</span>
                     </div>
-                    <div class="glass-card" style="text-align: center; border-bottom: 5px solid #10b981; padding: 25px 15px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                        <div style="color: #10b981; font-size: 32px; margin-bottom: 12px;"><i class="fa-solid fa-chart-line"></i></div>
+                    <div class="glass-card" style="text-align: center; border-bottom: 5px solid #f59e0b; padding: 25px 15px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <div style="color: #f59e0b; font-size: 32px; margin-bottom: 12px;"><i class="fa-solid fa-chart-line"></i></div>
                         <h4 style="font-size: 16px; color: #475569; margin-bottom: 10px; font-weight: 600;">Sales Analysis</h4>
-                        <span class="badge badge-success"><i class="fa-solid fa-check"></i> สำเร็จแล้ว</span>
+                        <span class="badge badge-warning"><i class="fa-solid fa-spinner fa-spin"></i> กำลังดำเนินการ</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Workflow Automation (ความสูงสมดุลเต็มพื้นที่สไลด์) -->
+            <!-- Workflow Automation -->
             <div class="glass-card" style="border-left: 6px solid #7c3aed; padding: 30px; display: flex; flex-direction: column; justify-content: space-between;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                     <h3 style="font-size: 20px; color: #475569; font-weight: 700;"><i class="fa-solid fa-robot" style="margin-right: 10px; color: #7c3aed;"></i> Workflow Automation</h3>
@@ -431,39 +447,46 @@
     </div>
 </div>
 
-<!-- SLIDE 4: KPI 2 - WEBSITE DEVELOPMENT (ขยายความสูงกล่องไทม์ไลน์) -->
+<!-- SLIDE 4: KPI 2 - WEBSITE DEVELOPMENT -->
 <div class="slide-container" id="slide-kpi2">
     <div class="ambient-glow-1"></div>
-    <h2 class="slide-title">KPI 2: WEBSITE TIMELINE STATUS</h2>
+    <h2 class="slide-title">
+        KPI 2: WEBSITE TIMELINE STATUS
+    </h2>
     <div class="content-area">
         <div class="grid-2" style="margin-top: 5px;">
             <!-- GMTX Website -->
             <div class="web-timeline-box" style="border-top: 6px solid #3b82f6;">
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px;">
                     <h3 style="font-size: 24px; color: #0f172a; font-weight: 700;"><i class="fa-solid fa-globe" style="color: #3b82f6; margin-right: 10px;"></i> GMTX</h3>
-                    <span class="badge badge-info" style="font-size: 14px; padding: 6px 14px;">Outsource Sourcing</span>
+                    <span class="badge badge-success" style="font-size: 14px; padding: 6px 14px; background: #e0f2fe; color: #0369a1;"><i class="fa-solid fa-spinner fa-spin"></i> 40% Completed</span>
                 </div>
                 
                 <div class="timeline-steps">
+                    <!-- Step 1: สำเร็จแล้ว -->
                     <div class="step-row completed">
                         <div class="step-icon"><i class="fa-solid fa-check"></i></div>
                         <div class="step-text">Sitemap & Wireframe</div>
                     </div>
+                    <!-- Step 2: สำเร็จแล้ว -->
                     <div class="step-row completed">
                         <div class="step-icon"><i class="fa-solid fa-check"></i></div>
-                        <div class="step-text">Content & Material</div>
+                        <div class="step-text">Find Outsource & Compare Price</div>
                     </div>
+                    <!-- Step 3: Content & Material -->
                     <div class="step-row current">
                         <div class="step-icon">3</div>
-                        <div class="step-text">Find Outsource (ปัจจุบัน)</div>
+                        <div class="step-text">Content & Material (กำลังดำเนินการ)</div>
                     </div>
+                    <!-- Step 4: Design & Development -->
                     <div class="step-row">
                         <div class="step-icon">4</div>
-                        <div class="step-text">Design & Develop</div>
+                        <div class="step-text">Design & Development (รอดำเนินการ)</div>
                     </div>
+                    <!-- Step 5: Test & Launch -->
                     <div class="step-row">
                         <div class="step-icon">5</div>
-                        <div class="step-text">Test & Launch</div>
+                        <div class="step-text">Test & Launch (รอดำเนินการ)</div>
                     </div>
                 </div>
             </div>
@@ -472,29 +495,34 @@
             <div class="web-timeline-box" style="border-top: 6px solid #7c3aed;">
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px;">
                     <h3 style="font-size: 24px; color: #0f172a; font-weight: 700;"><i class="fa-solid fa-comments" style="color: #7c3aed; margin-right: 10px;"></i> MM THE FORUM</h3>
-                    <span class="badge" style="background: #f3e8ff; color: #7c3aed; font-size: 14px; padding: 6px 14px;">Outsource Sourcing</span>
+                    <span class="badge badge-success" style="font-size: 14px; padding: 6px 14px;"><i class="fa-solid fa-circle-check"></i> 60% Completed</span>
                 </div>
                 
                 <div class="timeline-steps">
+                    <!-- Step 1: Sitemap & Wireframe -->
                     <div class="step-row completed">
                         <div class="step-icon"><i class="fa-solid fa-check"></i></div>
                         <div class="step-text">Sitemap & Wireframe</div>
                     </div>
+                    <!-- Step 2: Find Outsource & Compare Price -->
+                    <div class="step-row completed">
+                        <div class="step-icon"><i class="fa-solid fa-check"></i></div>
+                        <div class="step-text">Find Outsource & Compare Price</div>
+                    </div>
+                    <!-- Step 3: Content & Material -->
                     <div class="step-row completed">
                         <div class="step-icon"><i class="fa-solid fa-check"></i></div>
                         <div class="step-text">Content & Material</div>
                     </div>
-                    <div class="step-row current">
-                        <div class="step-icon" style="background: #7c3aed; border-color: #7c3aed;">3</div>
-                        <div class="step-text" style="color: #7c3aed;">Find Outsource (ปัจจุบัน)</div>
+                    <!-- Step 4: Design & Development -->
+                    <div class="step-row next-step">
+                        <div class="step-icon" style="background: #fdf2f8; border-color: #db2777; color: #db2777;"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="step-text" style="color: #db2777;">Design & Development (ขั้นตอนถัดไป)</div>
                     </div>
-                    <div class="step-row">
-                        <div class="step-icon">4</div>
-                        <div class="step-text">Design & Develop</div>
-                    </div>
+                    <!-- Step 5: Test & Launch -->
                     <div class="step-row">
                         <div class="step-icon">5</div>
-                        <div class="step-text">Test & Launch</div>
+                        <div class="step-text">Test & Launch (รอดำเนินการ)</div>
                     </div>
                 </div>
             </div>
@@ -502,99 +530,106 @@
     </div>
 </div>
 
-<!-- SLIDE 5: KPI 3 - DASHBOARD WORK PROGRESS (แสดงครบ 6 ตัวพร้อมดีไซน์ขนาดใหญ่ขึ้น) -->
+<!-- SLIDE 5: KPI 3 - DASHBOARD WORK PROGRESS -->
 <div class="slide-container" id="slide-kpi3">
     <div class="ambient-glow-2"></div>
-    <h2 class="slide-title">KPI 3: DASHBOARD DEVELOPMENT PROGRESS</h2>
+    <h2 class="slide-title">
+        KPI 3: DASHBOARD DEVELOPMENT PROGRESS
+    </h2>
     <div class="content-area">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <p style="font-size: 18px; color: #475569;">ความคืบหน้าการพัฒนา Dashboard จากเป้าหมายทั้งหมด 6 ระบบงาน</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+            <p style="font-size: 18px; color: #475569;">ความคืบหน้าการพัฒนา Dashboard จากเป้าหมายทั้งหมด 5 รายงาน</p>
             <span class="badge badge-success" style="font-size: 16px; padding: 8px 18px;">
-                <i class="fa-solid fa-chart-simple"></i> สำเร็จเสร็จสิ้นแล้ว 3 / 6 รายการ (50%)
+                <i class="fa-solid fa-chart-simple"></i> สำเร็จเสร็จสิ้นแล้ว 4 / 5 รายการ (80%)
             </span>
         </div>
 
         <div class="progress-grid">
-            <!-- Dashboard 1: Done -->
+            <!-- Dashboard 1: Email Marketing (Done) -->
             <div class="progress-item done">
                 <div class="check-circle done"><i class="fa-solid fa-check"></i></div>
                 <div>
-                    <h3 style="font-size: 18px; color: #0f172a; font-weight: 700; margin-bottom: 4px;">1. CRM Customer Overview</h3>
-                    <p style="font-size: 13px; color: #15803d; font-weight: 500;">เสร็จสมบูรณ์ - ดึงข้อมูลอัตโนมัติ</p>
+                    <h3 style="font-size: 18px; color: #0f172a; font-weight: 700; margin-bottom: 4px;">1. Email Marketing</h3>
+                    <p style="font-size: 13px; color: #15803d; font-weight: 500;">Done - อัปเดตรายเดือน</p>
                 </div>
             </div>
 
-            <!-- Dashboard 2: Done -->
+            <!-- Dashboard 2: MM Thailand Performance (Done) -->
             <div class="progress-item done">
                 <div class="check-circle done"><i class="fa-solid fa-check"></i></div>
                 <div>
-                    <h3 style="font-size: 18px; color: #0f172a; font-weight: 700; margin-bottom: 4px;">2. Sales & Revenue Funnel</h3>
-                    <p style="font-size: 13px; color: #15803d; font-weight: 500;">เสร็จสมบูรณ์ - เชื่อมต่อ API เรียบร้อย</p>
+                    <h3 style="font-size: 18px; color: #0f172a; font-weight: 700; margin-bottom: 4px;">2. MM Thailand Performance</h3>
+                    <p style="font-size: 13px; color: #15803d; font-weight: 500;">Done - กำลังทำ Q2</p>
                 </div>
             </div>
 
-            <!-- Dashboard 3: Done -->
+            <!-- Dashboard 3: Content Performance (Done) -->
             <div class="progress-item done">
                 <div class="check-circle done"><i class="fa-solid fa-check"></i></div>
                 <div>
-                    <h3 style="font-size: 18px; color: #0f172a; font-weight: 700; margin-bottom: 4px;">3. Marketing Ads ROI</h3>
-                    <p style="font-size: 13px; color: #15803d; font-weight: 500;">เสร็จสมบูรณ์ - พร้อมประเมินแคมเปญ</p>
+                    <h3 style="font-size: 18px; color: #0f172a; font-weight: 700; margin-bottom: 4px;">3. Content Performance</h3>
+                    <p style="font-size: 13px; color: #15803d; font-weight: 500;">Done - อัปเดตรายเดือน</p>
                 </div>
             </div>
 
-            <!-- Dashboard 4: Pending -->
-            <div class="progress-item pending">
-                <div class="check-circle pending"><i class="fa-solid fa-ellipsis"></i></div>
+            <!-- Dashboard 4: Key Account Movement (กำลังดำเนินการ) -->
+            <div class="progress-item progressing">
+                <div class="check-circle progressing"><i class="fa-solid fa-spinner fa-spin"></i></div>
                 <div>
-                    <h3 style="font-size: 18px; color: #475569; font-weight: 600; margin-bottom: 4px;">4. Customer Retention</h3>
-                    <p style="font-size: 13px; color: #64748b;">รอดำเนินการ - ล้างข้อมูลเฟส 2</p>
+                    <h3 style="font-size: 18px; color: #0f172a; font-weight: 700; margin-bottom: 4px;">4. Key Account Movement</h3>
+                    <p style="font-size: 13px; color: #b45309; font-weight: 500;">กำลังดำเนินการ - ทดสอบ Workflow Automation ให้เลือกค่าอัตโนมัติ</p>
                 </div>
             </div>
 
-            <!-- Dashboard 5: Pending -->
-            <div class="progress-item pending">
-                <div class="check-circle pending"><i class="fa-solid fa-ellipsis"></i></div>
+            <!-- Dashboard 5: User Engagement Report (Done) -->
+            <div class="progress-item done">
+                <div class="check-circle done"><i class="fa-solid fa-check"></i></div>
                 <div>
-                    <h3 style="font-size: 18px; color: #475569; font-weight: 600; margin-bottom: 4px;">5. Inventory & Supply Chain</h3>
-                    <p style="font-size: 13px; color: #64748b;">รอดำเนินการ - เตรียมสร้าง Schema</p>
-                </div>
-            </div>
-
-            <!-- Dashboard 6: Pending -->
-            <div class="progress-item pending">
-                <div class="check-circle pending"><i class="fa-solid fa-ellipsis"></i></div>
-                <div>
-                    <h3 style="font-size: 18px; color: #475569; font-weight: 600; margin-bottom: 4px;">6. Executive Summary Matrix</h3>
-                    <p style="font-size: 13px; color: #64748b;">รอดำเนินการ - รวบรวมสรุปภาพรวม</p>
+                    <h3 style="font-size: 18px; color: #0f172a; font-weight: 700; margin-bottom: 4px;">5. User Engagement Report</h3>
+                    <p style="font-size: 13px; color: #15803d; font-weight: 500;">Done - อัปเดตรายเดือน</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- SLIDE 6: KPI 4 - SUPERSOURCE PERFORMANCE (ขยายความสูงการ์ดเพื่อทดแทนช่องว่าง) -->
+<!-- SLIDE 6: KPI 4 - SUPERSOURCE PERFORMANCE -->
 <div class="slide-container" id="slide-kpi4">
     <div class="ambient-glow-1"></div>
-    <h2 class="slide-title">KPI 4: SUPERSOURCE SALES & MARKETING</h2>
+    <h2 class="slide-title">
+        KPI 4: SUPERSOURCE SALES & MARKETING
+    </h2>
     <div class="content-area">
         <div style="margin-bottom: 20px;">
-            <p style="font-size: 18px; color: #475569;">ผลักดันยอดขายให้บรรลุเป้าหมาย 100% ด้วยแผนการสร้างความน่าเชื่อถือและการเข้าถึงกลุ่มลูกค้า</p>
+            <p style="font-size: 18px; color: #475569;">ผลักดันยอดขายให้บรรลุเป้าหมาย 100% ด้วยการปรับปรุงเว็บไซต์ และการสื่อสารการตลาด</p>
         </div>
 
-        <!-- ขยายความสูงของการ์ดจาก 320px เป็น 370px ทำให้ดูเต็มหน้าและพอดีสไลด์ยิ่งขึ้น -->
         <div class="grid-3">
-            <!-- 1. Web Credibility -->
-            <div class="glass-card" style="border-top: 6px solid #ef4444; height: 370px; display: flex; flex-direction: column; justify-content: space-between; padding: 30px 24px;">
+            <!-- 1. Web Model Alignment -->
+            <div class="glass-card" style="border-top: 6px solid #ef4444; height: 370px; display: flex; flex-direction: column; justify-content: space-between; padding: 25px 20px;">
                 <div>
-                    <span class="badge" style="background: #fee2e2; color: #ef4444; font-size: 13px;"><i class="fa-solid fa-shield-halved"></i> Web Credibility</span>
-                    <h3 style="font-size: 20px; color: #0f172a; margin-top: 18px; font-weight: 700;">ปรับปรุงเว็บเพิ่มความน่าเชื่อถือ</h3>
+                    <span class="badge" style="background: #fee2e2; color: #ef4444; font-size: 13px;"><i class="fa-solid fa-sitemap"></i> Business Alignment</span>
+                    <h3 style="font-size: 19px; color: #0f172a; margin-top: 15px; font-weight: 700;">พัฒนาเว็บตามโมเดลธุรกิจ</h3>
                 </div>
-                <div style="text-align: center; margin: 20px 0;">
-                    <span class="number-font" style="font-size: 56px; font-weight: 800; color: #ef4444; line-height: 1;">3 / 5</span>
-                    <p style="font-size: 15px; color: #64748b; font-weight: 500; margin-top: 5px;">ขั้นตอนการดำเนินงานสำเร็จ</p>
+                
+                <div style="display: flex; flex-direction: column; gap: 10px; margin: 15px 0; text-align: left;">
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 14px;">
+                        <i class="fa-solid fa-spinner fa-spin" style="color: #f59e0b;"></i>
+                        <span style="color: #1e293b; font-weight: 600;">ทบทวนโมเดลธุรกิจ (กำลังทำ)</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 14px; opacity: 0.6;">
+                        <i class="fa-regular fa-circle" style="color: #cbd5e1;"></i>
+                        <span style="color: #64748b;">จัดทำ Sitemap เพิ่มเติม</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 14px; opacity: 0.6;">
+                        <i class="fa-regular fa-circle" style="color: #cbd5e1;"></i>
+                        <span style="color: #64748b;">หา Outsource เพื่อร่วมพัฒนา</span>
+                    </div>
                 </div>
+
                 <div>
-                    <div class="progress-container" style="height: 10px;"><div class="progress-bar" style="width: 60%; background: #ef4444;"></div></div>
+                    <div class="progress-container" style="height: 10px;"><div class="progress-bar" style="width: 33.3%; background: #ef4444;"></div></div>
+                    <span style="font-size: 12px; color: #64748b; font-weight: 500; display: block; margin-top: 4px;">ความคืบหน้าการศึกษา: กำลังดำเนินการ</span>
                 </div>
             </div>
 
@@ -602,14 +637,14 @@
             <div class="glass-card" style="border-top: 6px solid #3b82f6; height: 370px; display: flex; flex-direction: column; justify-content: space-between; padding: 30px 24px;">
                 <div>
                     <span class="badge badge-info" style="font-size: 13px;"><i class="fa-solid fa-arrow-trend-up"></i> Web Traffic</span>
-                    <h3 style="font-size: 20px; color: #0f172a; margin-top: 18px; font-weight: 700;">เพิ่มจำนวนผู้เข้าชมเว็บไซต์</h3>
+                    <h3 style="font-size: 20px; color: #0f172a; margin-top: 18px; font-weight: 700;">เพิ่มจำนวนผู้เข้าชมเว็บไซต์ 50% จากปีที่แล้ว</h3>
                 </div>
                 <div style="text-align: center; margin: 20px 0;">
-                    <span class="number-font" style="font-size: 56px; font-weight: 800; color: #3b82f6; line-height: 1;">10,000</span>
+                    <span class="number-font" style="font-size: 56px; font-weight: 800; color: #3b82f6; line-height: 1;">15,330</span>
                     <p style="font-size: 15px; color: #64748b; font-weight: 500; margin-top: 5px;">จากเป้าหมาย 20,000 ครั้ง</p>
                 </div>
                 <div>
-                    <div class="progress-container" style="height: 10px;"><div class="progress-bar" style="width: 50%; background: #3b82f6;"></div></div>
+                    <div class="progress-container" style="height: 10px;"><div class="progress-bar" style="width: 76.6%; background: #3b82f6;"></div></div>
                 </div>
             </div>
 
@@ -620,11 +655,11 @@
                     <h3 style="font-size: 20px; color: #0f172a; margin-top: 18px; font-weight: 700;">เขียนและเผยแพร่บทความ</h3>
                 </div>
                 <div style="text-align: center; margin: 20px 0;">
-                    <span class="number-font" style="font-size: 56px; font-weight: 800; color: #f59e0b; line-height: 1;">4 / 12</span>
-                    <p style="font-size: 15px; color: #64748b; font-weight: 500; margin-top: 5px;">บทความคุณภาพเสร็จสมบูรณ์</p>
+                    <span class="number-font" style="font-size: 56px; font-weight: 800; color: #f59e0b; line-height: 1;">2 / 10</span>
+                    <p style="font-size: 15px; color: #64748b; font-weight: 500; margin-top: 5px;">บทความ SEO เสร็จสมบูรณ์</p>
                 </div>
                 <div>
-                    <div class="progress-container" style="height: 10px;"><div class="progress-bar" style="width: 33.3%; background: #f59e0b;"></div></div>
+                    <div class="progress-container" style="height: 10px;"><div class="progress-bar" style="width: 20%; background: #f59e0b;"></div></div>
                 </div>
             </div>
         </div>
@@ -636,8 +671,7 @@
     <div class="ambient-glow-1"></div>
     <div class="ambient-glow-2"></div>
     <div class="content-area" style="text-align: center; justify-content: center; height: 100%;">
-        <h1 style="font-size: 80px; font-weight: 800; color: #0f172a; margin-bottom: 15px; letter-spacing: -2px;">THANK YOU</h1>
-        <p style="font-size: 26px; color: #3b82f6; font-weight: 600;">QUESTIONS & ANSWERS</p>
+        <h1 style="font-size: 80px; font-weight: 800; color: #0f172a; margin-bottom: 15px; letter-spacing: -2px;">THANK YOU</
         <div style="width: 80px; height: 4px; background: #cbd5e1; margin: 40px auto 30px; border-radius: 2px;"></div>
         <p style="font-size: 16px; color: #94a3b8;"><i class="fa-solid fa-server"></i> Performance Report - Department of Business Development</p>
     </div>
@@ -645,3 +679,6 @@
 
 </body>
 </html>
+
+```
+
